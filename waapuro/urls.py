@@ -15,6 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 import os
+import random
 
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -23,30 +24,31 @@ from django.urls import path, include, re_path
 from django.views.static import serve
 
 from waapuro import sitemaps, settings
-from waapuro.index.apps import add_default_site_config
-from waapuro.index.models import SiteConfig
+from waapuro.configs import db_config_all, migrating
 
 from waapuro.index import views as index
 
 # Load Database site configs
-add_default_site_config()
-siteconfig_obj = SiteConfig.objects.all()
+if not migrating():
+    from waapuro.index.apps import add_default_site_config
 
-site_configs = {}
+    add_default_site_config()
 
-for config in siteconfig_obj:
-    site_configs[config.key] = config.value
+site_configs = db_config_all()
 
 urlpatterns = [
     # Basic
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
+    path('favicon.ico', index.favicon),
 
     # Admin Views
-    path(f'{site_configs["URL_DJANGO_ADMIN"]}/', admin.site.urls),
+    path(f'{site_configs["URL_DJANGO_ADMIN"] if site_configs is not None else random.random()}/', admin.site.urls),
 
     # Built-in Web & Static
     re_path(r'^builtin/static/(?P<path>.*)$', serve, {'document_root': 'builtin/static'}),
     path('builtin/version', index.version),
+    # WAAAAAPURO!!!!!!!!!!
+    path('builtin/waapuro', index.waapuro_logo)
 ]
 
 # Static files (CSS, JavaScript, Images)

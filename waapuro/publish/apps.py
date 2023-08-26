@@ -134,7 +134,7 @@ def add_default_category(**kwargs):
     default_publish_types = [
         # Article
         {
-            "name": "miss",
+            "name": "default",
         }
     ]
 
@@ -143,3 +143,16 @@ def add_default_category(**kwargs):
             Category.objects.get_or_create(**publish_type_data)
         except IntegrityError:
             pass
+
+
+def sample_article():
+    """Create sample article AFTER confined"""
+    from .models import Article
+
+    default_publishes = [
+        {
+            "title": "わあぷろへようこそ",
+            "content": "[p]この記事を編集、あるいは削除して、創作を始めよう！[/p]"
+        },
+
+    ]

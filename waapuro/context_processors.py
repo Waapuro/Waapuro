@@ -3,6 +3,7 @@ import time
 from django.db import OperationalError
 
 from waapuro import settings
+from waapuro.configs import db_config
 from waapuro.index.models import SiteConfig
 
 
@@ -33,7 +34,7 @@ def sitedata(request):
 
     for key in config_keys:
         try:
-            value = SiteConfig.objects.get(key=key).value
+            value = db_config(key)
         except (OperationalError, SiteConfig.DoesNotExist):
             value = default_values[key]
         context[key] = value

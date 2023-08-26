@@ -49,7 +49,7 @@ import interface
 DEBUG = bool(os.environ.get("DEBUG"))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-secretkey'
+SECRET_KEY = 'waapuro-secretkey'
 SECRET_KEY = SECRET_KEY if DEBUG is True else secrets.token_hex(24)
 
 # ------------------------------

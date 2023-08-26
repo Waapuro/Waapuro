@@ -3,8 +3,9 @@ import re
 from django.urls import path
 from django.conf.urls.static import static
 from . import views
-from .models import SiteConfig
+# from .models import SiteConfig
 from .. import settings
+from ..configs import db_config
 
 """### resolver ###"""
 
@@ -14,7 +15,7 @@ def convert_to_django_pattern(input_format):
     return url[1:] if url.startswith('/') else url
 
 
-def url_articles_resolver(URL_ARTICLE=SiteConfig.objects.get(key="URL_ARTICLE").value):
+def url_articles_resolver(URL_ARTICLE=db_config('URL_ARTICLE')):
     using_args = re.findall(r"{(.*?)}", URL_ARTICLE)
     if not set(using_args).issubset(set(settings.URL_ARTICLE_SUPPORT_ARGS)):
         raise ValueError("An unexpected value was received. \r"
