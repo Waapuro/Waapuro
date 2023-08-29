@@ -55,5 +55,10 @@ def sample():
             "key": "URL_ARTICLE",
             "value": "/post/{TITLE}",
             "help_text": "ARTICLE's pattern. See Document at: https://docs.waapuro.org/"
-        }
+        },
+        {
+            "key": "CODE_CLASSTAG_ALLOW",
+            "value": "disable",
+            "help_text": "ARTICLE's pattern. See Document at: https://docs.waapuro.org/"
+        },
     ]
