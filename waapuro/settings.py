@@ -10,12 +10,15 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+import json
 import os
 import secrets
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+with open(BASE_DIR / "configs" / "settings.json", 'r', encoding='utf-8') as file:
+    SETTINGS_JSON = json.loads(file.read())
 
 
 # Load templates
@@ -61,6 +64,12 @@ ALLOWED_HOSTS = ["*"]
 USING_TEMPLATE = "syoseki"
 
 # ------------------------------
+# WaapuroCode Save at
+WAAPUROCODE_ROOTS = SETTINGS_JSON["WAAPUROCODE_ROOTS"]
+# WaapuroCode supported content tag
+WAAPUROCODE_CONTENT_TAG = SETTINGS_JSON["WAAPUROCODE_CONTENT_TAGS"]
+
+# ------------------------------
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -93,21 +102,15 @@ SITEMAPS = {
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'ja'
-TIME_ZONE = 'Asia/Tokyo'
-USE_I18N = True
+LANGUAGE_CODE = SETTINGS_JSON["LANGUAGE_CODE"]
+TIME_ZONE = SETTINGS_JSON["TIME_ZONE"]
 USE_TZ = True
 CHARSET = 'UTF-8'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+DATABASES = SETTINGS_JSON["DATABASES"]
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -138,6 +141,9 @@ URL_ARTICLE_SUPPORT_ARGS = [
 CONTEXT_PROCESSORS = [
     "waapuro.context_processors.sitedata",
 ]
+
+# WaapuroCode Supported Content Tags
+# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 # The config is done.
 ######################################################

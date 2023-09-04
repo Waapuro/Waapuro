@@ -1,0 +1,100 @@
+<!--
+A Demo Waapuro Code file
+https://docs.waapuro.org/start/guideline/waapurocode
+-->
+<waapuro>
+  <profile>
+    <!--
+    文章の見出し
+    -->
+    <title>川端康成「雪国」の評論</title>
+    <!--
+    文章のカスタムURL
+    -->
+    <url>kawabatayasunari-yukiguni-hyouronn</url>
+    <!--
+    文章の作者
+    サイトのデータベースに照合できるUSERNAMEがあれば、そのUSERの氏名を表示する
+    -->
+    <author>ikuta</author>
+    <!--
+    発表する時日
+    https://docs.waapuro.org/start/guideline/waapurocode/profile-tag/datetime
+    -->
+    <publish_time calendar="default" utc="Etc/GMT" arabicnum="flexible">60189.0</publish_time>
+    <category>評論文</category>
+    <excerpt>越後の雪深い地方を舞台に、対照的な二人の女性―地元の温泉地で働く芸者・駒子と都会...(略)</excerpt>
+    <!--
+    この記事のID（UUIDを利用）
+    -->
+    <id>472A2280-429F-4776-850B-940EF4C749D2</id>
+    <!--
+    この記事の前のバージョンのID
+    -->
+    <last_version>2BCF928B-3017-419A-BD6A-342D48EAD96B</last_version>
+    <!--
+    この記事の父記事ID
+    -->
+    <parent>2CD69547-ECCC-4126-B34E-EE6CC901570B</parent>
+    <!--
+    この記事の状態
+
+    -->
+    <status>published</status>
+    <status-releasetime>60200.5</status-releasetime>
+    <status-passwd>psw</status-passwd>
+
+    <!--
+    関連タグ
+    -->
+    <tags>
+      <tag>川端康成</tag>
+      <tag>雪国</tag>
+      <tag>越後</tag>
+      <tag>温泉地</tag>
+    </tags>
+    <!--
+    記事の形態
+
+    -->
+    <type>post</type>
+  </profile>
+  <content>
+    <h2>川端康成『雪国』の評価</h2>
+    <p>『雪国』は日本近代文学の最高傑作のひとつとされています。</p>
+
+    <img src="/builtin/waapuro?size=256&format=webp" alt="666">
+
+    <s>ｓタグ</s>
+
+    <hr>
+
+    <ruby>
+      雪国
+      <rt>ゆきぐに</rt>
+    </ruby>
+
+    <table>
+      <tr>
+        <th>文学的価値</th>
+        <td>高い</td>
+      </tr>
+      <tr>
+        <th>主題</th>
+        <td>人間関係、自然</td>
+      </tr>
+    </table>
+
+    <h3>文学的価値</h3>
+    <p>この作品は深い感情と複雑な人間関係を持つ作品とされています。</p>
+
+    <h4>叙情的な恋愛</h4>
+    <p>川端康成の独特の文体が叙情的な恋愛を見事に描いています。</p>
+
+    <h5>温泉町と芸者文化</h5>
+    <p>作品は温泉町と芸者の文化を描き出しています。</p>
+
+    <h6>舞踊研究と家庭関係</h6>
+    <p>作品内での舞踊研究と家庭関係も重要なテーマである。</p>
+  </content>
+</waapuro>

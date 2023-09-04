@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y nginx
 COPY .container_cfg/nginx.conf /etc/nginx
 
 # Copy start script and make it executable
-COPY ./container_cfg/start.sh /app/start.sh
+COPY configs_container/start.sh /app/start.sh
 RUN chmod +x /app/start.sh
 
 # Start Gunicorn and Nginx

@@ -57,8 +57,8 @@ def sample():
             "help_text": "ARTICLE's pattern. See Document at: https://docs.waapuro.org/"
         },
         {
-            "key": "CODE_CLASSTAG_ALLOW",
+            "key": "CODE_HTMLTAG_ALLOW",
             "value": "disable",
-            "help_text": "ARTICLE's pattern. See Document at: https://docs.waapuro.org/"
+            "help_text": "Set it 'enable' to allow <html> tag in articles."
         },
     ]
