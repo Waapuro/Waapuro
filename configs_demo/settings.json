@@ -1,0 +1,26 @@
+{
+  "LANGUAGE_CODE": "ja",
+  "TIME_ZONE": "Asia/Tokyo",
+  "DATABASES": {
+    "default": {
+      "ENGINE": "django.db.backends.sqlite3",
+      "NAME": "db.sqlite3"
+    }
+  },
+  "WAAPUROCODE_ROOTS": [
+    {
+      "server": "LOCAL",
+      "root": "~/.waapuro/",
+      "log-root": true
+    }
+  ],
+  "WAAPUROCODE_CONTENT_TAGS": [
+    "h2", "h3", "h4", "h5", "h6",
+    "p",
+    "img",
+    "s",
+    "hr",
+    "ruby", "rt",
+    "table", "tr", "td", "th"
+  ]
+}

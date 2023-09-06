@@ -36,6 +36,9 @@ if not migrating():
 
 site_configs = db_config_all()
 
+# Bulid-in pages
+urlpatterns_bulidin = []
+
 urlpatterns = [
     # Basic
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
@@ -46,9 +49,11 @@ urlpatterns = [
 
     # Built-in Web & Static
     re_path(r'^builtin/static/(?P<path>.*)$', serve, {'document_root': 'builtin/static'}),
-    path('builtin/version', index.version),
-    # WAAAAAPURO!!!!!!!!!!
-    path('builtin/waapuro', index.waapuro_logo)
+    path('builtin/', include([
+        path('version/', index.version),
+        path('waapuro/', index.waapuro_logo),
+        path('publishtool/', include('waapuro.publish.urls')),
+    ])),
 ]
 
 # Static files (CSS, JavaScript, Images)

@@ -102,32 +102,94 @@ class Category(models.Model):
 """#### Publishes Model ####"""
 
 
+class PublishIndex(models.Model):
+    """PublishIndex"""
+
+    def __str__(self):
+        return self.id
+
+    id = models.AutoField("Index ID", primary_key=True)
+    filepath = models.CharField("Filepath", max_length=4096, help_text="Waapuro files path.")
+
+    class Meta:
+        permissions = [
+            ("can_read_PublishIndex".lower(), "Can read PublishIndex info"),
+            ("can_write_PublishIndex".lower(), "Can write PublishIndex info"),
+        ]
+        verbose_name = "PublishIndex"
+        verbose_name_plural = "PublishIndex"
+
+
+class Tags(models.Model):
+    """Tags Index"""
+
+    def __str__(self):
+        return self.name
+
+    id = models.AutoField("ID", primary_key=True)
+    name = models.CharField("Tag name", max_length=64, help_text="Content of tag.")
+    author = models.ForeignKey(PublishIndex, on_delete=models.CASCADE)
+
+    class Meta:
+        permissions = [
+            ("can_read_Tags".lower(), "Can read Tags info"),
+            ("can_write_Tags".lower(), "Can write Tags info"),
+        ]
+        verbose_name = "Tags Index"
+        verbose_name_plural = "Tags Index"
+
+
 class Article(models.Model):
     """文章"""
 
     def __str__(self):
         return self.title
 
-    id = models.BigAutoField("ID", primary_key=True, help_text="ID")
-    parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='children')
-    title = models.CharField("Title", max_length=128, null=True, help_text="Title")
-    content = models.TextField("Content", null=True, help_text="Your content")
-    excerpt = models.TextField("Excerpt", null=True, help_text="Show at FEED or list")
-    publish_date = models.DateTimeField(auto_now_add=True, help_text="Published date")
-    update_date = models.DateTimeField(auto_now=True, help_text="Updated date")
-    data = models.JSONField(null=True, blank=True, default=dict)
-    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL,
-                               help_text="Status and Settings of page or article")
-    type = models.ForeignKey(PublishType, null=True, on_delete=models.SET_NULL, help_text="Type of this article")
-    status = models.ForeignKey(Status, null=True, on_delete=models.SET_NULL,
-                               help_text="etc.Published, Draft or Planned")
-    tags = models.ForeignKey(Tag, null=True, blank=True, on_delete=models.SET_NULL, help_text="Tags")
-    category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL, help_text="Category")
-    custom_url = models.SlugField(unique=True, null=True, blank=True)
+    index_id = models.BigAutoField("ID", primary_key=True, help_text="ID")
+    status = models.ForeignKey(
+        Status, null=True, on_delete=models.SET_NULL,
+        help_text="https://docs.waapuro.org/start/guideline/waapurocode/profile-tag/status"
+    )
+    url = models.SlugField(
+        unique=True, null=True, blank=True
+    )
+    """Just cache at database for index, The following must be based on the Waapuro XML"""
+    wc_id = models.CharField("Waapuro Code ID", max_length=36, help_text="ID")
+    parent = models.ForeignKey(
+        'self',  # TODO: Change it: To save parent's id
+        on_delete=models.SET_NULL, null=True, blank=True, related_name='children'
+    )
+    last_version = models.CharField(
+        "Last Version",  # TODO: Just cache at database for index
+        max_length=128, null=True, help_text="Article ID of Last version (It's First version when 'None')"
+    )
+    title = models.CharField(
+        "Title",  # TODO: Just cache at database for index
+        max_length=128, null=True, help_text="Title"
+    )
+    excerpt = models.TextField(
+        "Excerpt",  # Auto generate or write by author  # TODO: Just cache at database for index
+        null=True, help_text="It will be show at FEED or List. Auto generate & write by author"
+    )  # Just cache at database for index
+    publish_date = models.DateTimeField(
+        "Publish Date",  # TODO: Just cache at database for index
+        auto_now_add=True, help_text="Published date"
+    )
+    author = models.ForeignKey(
+        User, null=True, on_delete=models.SET_NULL,  # TODO: Just cache at database for index
+        help_text="Status and Settings of page or article"
+    )
+    type = models.ForeignKey(  # TODO: Just cache at database for index
+        PublishType, null=True, on_delete=models.SET_NULL, help_text="Type of this article"
+    )
+    content = models.TextField(
+        "Content",  # Waapuro code
+        null=True, help_text="Waapuro Code <content>"
+    )
 
     def save(self, *args, **kwargs):
-        if not self.custom_url:
-            self.custom_url = slugify(self.title)
+        if not self.url:
+            self.url = slugify(self.title)
         super(Article, self).save(*args, **kwargs)
 
     class Meta:
@@ -137,6 +199,24 @@ class Article(models.Model):
         ]
         verbose_name = "Article"
         verbose_name_plural = "Articles"
+
+
+class ArticleUrlWcfMapping(models.Model):
+    """Article URL <=> WaapuroCode File Mapping"""
+
+    def __str__(self):
+        return self.url
+
+    url = models.TextField("URL", unique=True)
+    wc_path = models.TextField("WaapuroCode Path", unique=True)
+
+    class Meta:
+        permissions = [
+            ("can_read_ArticleUrlWcfMapping".lower(), "Can read ArticleUrlWcfMapping info"),
+            ("can_write_ArticleUrlWcfMapping".lower(), "Can write ArticleUrlWcfMapping info"),
+        ]
+        verbose_name = "Article URL WaapuroCode File Mapping"
+        verbose_name_plural = "Article URL WaapuroCode File Mapping"
 
 
 class Page(models.Model):

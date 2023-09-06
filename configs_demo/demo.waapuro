@@ -23,6 +23,7 @@ https://docs.waapuro.org/start/guideline/waapurocode
     -->
     <publish_time calendar="default" utc="Etc/GMT" arabicnum="flexible">60189.0</publish_time>
     <category>評論文</category>
+    <parent_category>文章</parent_category>
     <excerpt>越後の雪深い地方を舞台に、対照的な二人の女性―地元の温泉地で働く芸者・駒子と都会...(略)</excerpt>
     <!--
     この記事のID（UUIDを利用）
@@ -63,11 +64,11 @@ https://docs.waapuro.org/start/guideline/waapurocode
     <h2>川端康成『雪国』の評価</h2>
     <p>『雪国』は日本近代文学の最高傑作のひとつとされています。</p>
 
-    <img src="/builtin/waapuro?size=256&format=webp" alt="666">
+    <img src="/builtin/waapuro?size=256&format=webp" alt="666" />
 
     <s>ｓタグ</s>
 
-    <hr>
+    <hr />
 
     <ruby>
       雪国
