@@ -7,7 +7,7 @@ import threading
 from pathlib import Path
 
 from django.core.cache import cache
-from django.db import IntegrityError
+from lxml import etree
 
 from waapuro import settings
 import os
@@ -130,12 +130,15 @@ class WaapuroIndexer:
         """
 
         def _thread():
-            index_list = ArticleUrlWcfMapping.objects.all()
             # clear old datas
-            ArticleUrlWcfMapping.objects.all().delete()
+            Article.objects.all().delete()
+
+            # load waapuro files index
+            index_list = ArticleUrlWcfMapping.objects.all()
+
             for index in index_list:
                 p = index.wc_path
-                url = index.url
+                # url = index.url
                 self.logger.debug(f"Reading '{p}'.")
 
                 # read waapuro file
@@ -143,8 +146,19 @@ class WaapuroIndexer:
                 with open(p, 'r', encoding=settings.CHARSET) as file:
                     wc.set_waapurocode(file.read())
 
+                # Generate field mappings
                 profile = wc.get_profile()
                 field_mapping = generate_field_mapping(profile)
+                field_mapping["content"] = etree.tostring(
+                    wc.get_content(), pretty_print=True,
+                    encoding="unicode"
+                )
+
+                # Check if content is None or empty
+                if not field_mapping["content"]:
+                    self.logger.warning(f"{p}Content is empty or None")
+
+                # Save Obj
                 Article(**field_mapping).save()
 
         thread = threading.Thread(target=_thread)
@@ -153,6 +167,7 @@ class WaapuroIndexer:
         return thread
 
     def flow_build_index(self):
+        self.logger.info("FLOW STARTED")
         try:
             self.search_waapuro_files().join()
             self.build_index().join()

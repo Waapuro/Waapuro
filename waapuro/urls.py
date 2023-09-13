@@ -35,8 +35,10 @@ if not migrating():
     add_default_site_config()
 
 site_configs = db_config_all()
+admin_url = site_configs["URL_DJANGO_ADMIN"] if site_configs is not None else f"waapuro-admin/"
+print(f"ADMIN PANEL:/{admin_url}")
 
-# Bulid-in pages
+# Build-in pages
 urlpatterns_bulidin = []
 
 urlpatterns = [
@@ -45,7 +47,7 @@ urlpatterns = [
     path('favicon.ico', index.favicon),
 
     # Admin Views
-    path(f'{site_configs["URL_DJANGO_ADMIN"] if site_configs is not None else random.random()}/', admin.site.urls),
+    path(f'{admin_url}/', admin.site.urls),
 
     # Built-in Web & Static
     re_path(r'^builtin/static/(?P<path>.*)$', serve, {'document_root': 'builtin/static'}),

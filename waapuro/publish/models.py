@@ -204,9 +204,6 @@ class Article(models.Model):
 class ArticleUrlWcfMapping(models.Model):
     """Article URL <=> WaapuroCode File Mapping"""
 
-    def __str__(self):
-        return self.url
-
     url = models.TextField("URL", unique=True)
     wc_path = models.TextField("WaapuroCode Path", unique=True)
 
@@ -216,7 +213,7 @@ class ArticleUrlWcfMapping(models.Model):
             ("can_write_ArticleUrlWcfMapping".lower(), "Can write ArticleUrlWcfMapping info"),
         ]
         verbose_name = "Article URL WaapuroCode File Mapping"
-        verbose_name_plural = "Article URL WaapuroCode File Mapping"
+        verbose_name_plural = "URL-File Mapping"
 
 
 class Page(models.Model):
@@ -227,16 +224,18 @@ class Page(models.Model):
 
     id = models.BigAutoField("ID", primary_key=True, help_text="ID")
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='children')
-    title = models.CharField("Title", max_length=128, null=True, help_text="Title")
-    content = models.TextField("Content", null=True, help_text="Your content")
-    excerpt = models.TextField("Excerpt", null=True, help_text="Show at FEED or list")
+    title = models.CharField("Title", max_length=128, null=True, blank=True, help_text="Title")
+    content = models.TextField("Content", null=True, blank=True, help_text="Your content")
+    excerpt = models.TextField("Excerpt", null=True, blank=True, help_text="Show at FEED or list")
     publish_date = models.DateTimeField(auto_now_add=True, help_text="Published date")
     update_date = models.DateTimeField(auto_now=True, help_text="Updated date")
-    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL,
+    author = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL,
                                help_text="Status and Settings of page or article")
-    type = models.ForeignKey(PublishType, null=True, on_delete=models.SET_NULL, help_text="Type of this article")
-    status = models.ForeignKey(Status, null=True, on_delete=models.SET_NULL, help_text="Show at FEED or list")
-    category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL, help_text="Category")
+    type = models.ForeignKey(PublishType, null=True, blank=True, on_delete=models.SET_NULL,
+                             help_text="Type of this article")
+    status = models.ForeignKey(Status, null=True, blank=True, on_delete=models.SET_NULL,
+                               help_text="Show at FEED or list")
+    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL, help_text="Category")
     url = models.SlugField(unique=True)
 
     class Meta:
