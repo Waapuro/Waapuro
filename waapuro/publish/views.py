@@ -6,9 +6,11 @@ from django.shortcuts import render
 
 from waapuro import urls
 from waapuro.publish.models import Article
+from waapuro.user_required import superuser_required
 from waapuro_code.indexer import *
 
 
+@superuser_required
 def index_status(request):
     # make indexer
     _index = WaapuroIndexer()

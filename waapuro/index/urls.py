@@ -22,6 +22,7 @@ def url_articles_resolver(URL_ARTICLE=db_config('URL_ARTICLE')):
                          f"URL_ARTICLE: {URL_ARTICLE}\r"
                          f"settings.URL_ARTICLE_SUPPORT_ARGS: {settings.URL_ARTICLE_SUPPORT_ARGS}")
     return [
+        # post (detail)
         path(convert_to_django_pattern(URL_ARTICLE), views.article, name='article_detail')
     ]
 

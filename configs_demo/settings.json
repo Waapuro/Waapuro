@@ -20,7 +20,7 @@
     "img",
     "s",
     "hr",
-    "ruby", "rt",
+    "ruby", "rt", "rb",
     "table", "tr", "td", "th"
   ]
 }

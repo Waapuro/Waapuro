@@ -11,8 +11,9 @@ from django.http import HttpResponseBadRequest, Http404
 from PIL import Image
 
 from waapuro import settings
-from waapuro.publish.models import Article
+from waapuro.publish.models import *
 from waapuro.settings import BASE_DIR
+from waapuro_code.parser.HTML import WC2HTML
 
 
 def index(request):
@@ -20,12 +21,17 @@ def index(request):
 
 
 def article(request, *args, **kwargs):
+    """
+    Articles detail page
+    """
     filters = {}
 
-    search_fields = ['id', 'author', 'type', 'category', 'title']
+    search_fields = ['id', 'author', 'type', 'category', 'url']
 
     # 将kwargs的键转换为小写
     kwargs_lower = {k.lower(): v for k, v in kwargs.items()}
+
+    print(kwargs_lower)
 
     for field in search_fields:
         value = kwargs_lower.get(field)
@@ -34,11 +40,19 @@ def article(request, *args, **kwargs):
 
     matched = Article.objects.filter(**filters).first()
 
+    # get waapuro_file path
+    waapuro_filepath = ArticleUrlWcfMapping.objects.get(url=matched.url)
+
+    # parse 2 html
+    content = WC2HTML().parse(wc_content_str=matched.content)
+    print(content)
+
     if not matched:
         raise Http404()
     else:
         return render(request, "article.html", {
             "article": matched,
+            "content": content,
         })
 
 

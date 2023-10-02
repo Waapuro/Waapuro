@@ -8,9 +8,16 @@ import re
 from django.contrib.auth.models import User
 from lxml import etree
 import xmltodict
+from lxml.etree import XMLSyntaxError
 
 from waapuro import settings
 from waapuro.publish.models import Status, PublishType, Article
+
+
+# from waapuro_code.parser.HTML import WC2HTML
+
+
+# from waapuro_code.parser.HTML import *
 
 
 def generate_field_mapping(profile):
@@ -78,12 +85,13 @@ def generate_field_mapping(profile):
 
 class WaapuroCode:
     """
-    WaapuroCode To Html
+    WaapuroCode OBJECT
     """
 
-    def __init__(self, wc_str="<waapuro></waapuro>"):
-        self._wc = wc_str
-        self.set_waapurocode(wc_str)
+    def __init__(self, *args, **kwargs):
+        self._wc = kwargs.get("wc_str")
+        if self._wc is not None:
+            self.set_waapurocode(self._wc)
 
     def _load(self):
         self.waapuro_root = etree.fromstring(self._wc)
@@ -111,44 +119,9 @@ class WaapuroCode:
         return self.waapuro_root.find("content")
 
 
-class WC2HTML(WaapuroCode):
-    def parse(self):
-        """
-        Parse content to HTML
-        return: HTML string
-        """
-        keep_tags = settings.WAAPUROCODE_CONTENT_TAG
-        _content_root = self.get_content()
-
-        def clean_tags(element):
-            for sub_element in element[:]:
-                if sub_element.tag not in keep_tags:
-                    element.remove(sub_element)
-                else:
-                    clean_tags(sub_element)
-
-        clean_tags(_content_root)
-        xml_string = etree.tostring(_content_root, pretty_print=True, encoding='utf-8').decode('utf-8')
-        return html.unescape(xml_string)
-
-    def parse_min(self):
-        delete = ["  ", "\r", "\n"]
-        content = self.parse()
-        for d in delete:
-            content = content.replace(d, "")
-        return content
-
-
 if __name__ == '__main__':
     wc = WaapuroCode()
     with open('../configs_demo/demo.waapuro', 'r', encoding='utf-8') as file:
         wc.set_waapurocode(file.read())
 
     print(wc.get_profile())
-
-    w2h = WC2HTML()
-    with open('../configs_demo/demo.waapuro', 'r', encoding='utf-8') as file:
-        w2h.set_waapurocode(file.read())
-
-    print(w2h.get_profile())
-    print(w2h.parse_min())

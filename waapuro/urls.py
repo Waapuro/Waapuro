@@ -56,6 +56,12 @@ urlpatterns = [
         path('waapuro/', index.waapuro_logo),
         path('publishtool/', include('waapuro.publish.urls')),
     ])),
+
+    # Custom path collector
+    # etc. page article
+    # And index-page
+
+    path('', include('waapuro.index.urls'))
 ]
 
 # Static files (CSS, JavaScript, Images)
@@ -70,7 +76,3 @@ if settings.DEBUG:
             urlpatterns += static('front', document_root=static_path)
         url = os.path.join(os.path.basename(templates_base), 'front').replace('\\', '/')
         urlpatterns += static(url, document_root=static_path)
-
-# Front Views
-# etc. page article
-urlpatterns.append(path('', include('waapuro.index.urls')))
