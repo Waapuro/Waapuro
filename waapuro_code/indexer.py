@@ -111,9 +111,8 @@ class WaapuroIndexer:
             for path in flist:
                 self.logger.debug(f"Creating WaapuroCode obj form '{path}'.")
                 # make new datas
-                wc = WaapuroCode()
                 with open(path, 'r', encoding=settings.CHARSET) as file:
-                    wc.set_waapurocode(file.read())
+                    wc = WaapuroCode(wc_str=file.read())
                 # import new datas
                 profile = wc.get_profile()
                 self.logger.debug(profile)

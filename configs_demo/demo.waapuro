@@ -7,24 +7,27 @@ https://docs.waapuro.org/start/guideline/waapurocode
     <!--
     文章の見出し
     -->
-    <title>川端康成「雪国」の評論</title>
+    <title>走れメロス</title>
     <!--
     文章のカスタムURL
     -->
-    <url>kawabatayasunari-yukiguni-hyouronn</url>
+    <url>hashire-merosu</url>
     <!--
     文章の作者
     サイトのデータベースに照合できるUSERNAMEがあれば、そのUSERの氏名を表示する
     -->
-    <author>ikuta</author>
+    <author>dasaiosamu</author>
     <!--
     発表する時日
     https://docs.waapuro.org/start/guideline/waapurocode/profile-tag/datetime
     -->
     <publish_time calendar="default" utc="Etc/GMT" arabicnum="flexible">60189.0</publish_time>
-    <category>評論文</category>
-    <parent_category>文章</parent_category>
-    <excerpt>越後の雪深い地方を舞台に、対照的な二人の女性―地元の温泉地で働く芸者・駒子と都会...(略)</excerpt>
+    <category>太宰治</category>
+    <excerpt>
+      《走れメロス》は太宰治によって書かれた短編小説です。この作品は古代ギリシャの伝説に基づいており、主人公メロスが王ディオニスに対する反乱を企てた罪で捕らえられます。メロスは絞首刑にされる予定ですが、妹の結婚式に出席するために3日の猶予を王に頼みます。
+      王は当初、メロスが逃げるだろうと考えていましたが、メロスは自分の親友セリヌンティウスを人質として残し、約束通り3日後に戻ると誓います。セリヌンティウスはメロスが戻らなかった場合、代わりに絞首刑にされることに同意します。
+      メロスは妹の結婚式に出席した後、約束通りに戻るために急いで旅をします。途中で数々の困難に遭遇しますが、最終的にはちょうど実行の瞬間に間に合い、セリヌンティウスを救います。王はメロスとセリヌンティウスの友情と信頼に感動し、二人を釈放します。
+    </excerpt>
     <!--
     この記事のID（UUIDを利用）
     -->
@@ -39,24 +42,18 @@ https://docs.waapuro.org/start/guideline/waapurocode
     <parent>2CD69547-ECCC-4126-B34E-EE6CC901570B</parent>
     <!--
     この記事の状態
-
     -->
     <status>published</status>
     <status-releasetime>60200.5</status-releasetime>
     <status-passwd>psw</status-passwd>
-
     <!--
     関連タグ
     -->
     <tags>
-      <tag>川端康成</tag>
-      <tag>雪国</tag>
-      <tag>越後</tag>
-      <tag>温泉地</tag>
+      <tag>太宰治</tag>
     </tags>
     <!--
     記事の形態
-
     -->
     <type>post</type>
   </profile>
@@ -64,11 +61,11 @@ https://docs.waapuro.org/start/guideline/waapurocode
     <h2>川端康成『雪国』の評価</h2>
     <p>『雪国』は日本近代文学の最高傑作のひとつとされています。</p>
 
-    <img src="/builtin/waapuro?size=256&format=webp" alt="666" />
+    <img src="/builtin/waapuro?size=256&format=webp" alt="666"/>
 
     <s>ｓタグ</s>
 
-    <hr />
+    <hr/>
 
     <ruby>
       雪国

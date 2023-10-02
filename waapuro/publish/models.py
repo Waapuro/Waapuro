@@ -1,6 +1,10 @@
+import re
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.text import slugify
+
+from waapuro.configs import db_config
 
 
 class Status(models.Model):
@@ -186,6 +190,10 @@ class Article(models.Model):
         "Content",  # Waapuro code
         null=True, help_text="Waapuro Code <content>"
     )
+
+    @property
+    def real_url(self, url_patten=db_config('URL_ARTICLE')):
+        return re.sub(r'<(.*?)>', lambda match: getattr(self, match.group(1)), url_patten)
 
     def save(self, *args, **kwargs):
         if not self.url:

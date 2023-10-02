@@ -11,35 +11,39 @@ from django.http import HttpResponseBadRequest, Http404
 from PIL import Image
 
 from waapuro import settings
-from waapuro.publish.models import Article
+from waapuro.publish.models import *
 from waapuro.settings import BASE_DIR
+from waapuro_code.parser.HTML import WC2HTML
 
 
 def index(request):
     return render(request, 'index.html')
 
 
-def article(request, *args, **kwargs):
-    filters = {}
+def article(request, sub_path):
+    """
+    Articles detail page
+    """
+    sub_path = f"/{sub_path}"
+    all_ = Article.objects.filter()
+    matched = None
+    for obj in all_:
+        if obj.real_url == sub_path:
+            matched = obj
+    if matched:
+        # get waapuro_file path
+        waapuro_filepath = ArticleUrlWcfMapping.objects.get(url=matched.url).wc_path
 
-    search_fields = ['id', 'author', 'type', 'category', 'title']
+        # TODO:未来将waapuro code读取类整合
+        with open(waapuro_filepath, 'r', encoding='utf-8') as file:
+            content = WC2HTML(wc_str=file.read()).parse()
 
-    # 将kwargs的键转换为小写
-    kwargs_lower = {k.lower(): v for k, v in kwargs.items()}
-
-    for field in search_fields:
-        value = kwargs_lower.get(field)
-        if value is not None:
-            filters[field] = value
-
-    matched = Article.objects.filter(**filters).first()
-
-    if not matched:
-        raise Http404()
+            return render(request, "article.html", {
+                "article": matched,
+                "content": content,
+            })
     else:
-        return render(request, "article.html", {
-            "article": matched,
-        })
+        raise Http404()
 
 
 """ Build-in Pages """

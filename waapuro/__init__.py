@@ -4,7 +4,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # paginate
 def paginate_queryset(queryset, page_number, items_per_page):
     """
-    articles = Article.objects.all().order_by('-publish_date')  # 你的查询集
+    articles = Article.objects.all().order_by('-publish_date')  # 查询集
 
     page_number = request.GET.get('page')
     items_per_page = 10  # 每页显示的项数
