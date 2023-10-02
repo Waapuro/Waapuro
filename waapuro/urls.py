@@ -60,7 +60,6 @@ urlpatterns = [
     # Custom path collector
     # etc. page article
     # And index-page
-
     path('', include('waapuro.index.urls'))
 ]
 

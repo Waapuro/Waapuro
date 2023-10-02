@@ -11,6 +11,7 @@ from ..configs import db_config
 
 
 def handle_request(request, sub_path):
+    print(sub_path)
     try:
         return article(request, sub_path)
     except Http404:
@@ -19,5 +20,5 @@ def handle_request(request, sub_path):
 
 urlpatterns = [
     path('', views.index),
-    path("<path:sub_path>", handle_request, name='handle_request'),
+    path("<path:sub_path>/", handle_request, name='handle_request'),
 ]
